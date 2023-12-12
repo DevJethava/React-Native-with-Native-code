@@ -114,6 +114,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation("cz.msebera.android:httpclient:4.5.8")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
