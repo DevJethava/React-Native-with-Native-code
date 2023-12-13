@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DefaultDiscovery2 extends AbstractDiscovery2 {
 
-    private final String TAG = "DefaultDiscovery";
+    private final String TAG = "DefaultDiscovery2";
     private final static int[] DPORTS = {139, 445, 22, 80};
     private final static int TIMEOUT_SCAN = 3600; // seconds
     private final static int TIMEOUT_SHUTDOWN = 10; // seconds
@@ -33,11 +33,13 @@ public class DefaultDiscovery2 extends AbstractDiscovery2 {
     private ExecutorService mPool;
     private boolean doRateControl;
     private RateControl mRateControl;
+    private NetInfo net = null;
 //    private Save mSave;
 
     public DefaultDiscovery2(Activity discover, Progress progress) {
         super(discover, progress);
         mRateControl = new RateControl();
+        net = new NetInfo(discover);
 //        mSave = new Save();
     }
 
@@ -252,9 +254,9 @@ public class DefaultDiscovery2 extends AbstractDiscovery2 {
 //                host.nicVendor = HardwareAddress.getNicVendor(host.hardwareAddress);
 
                 // Is gateway ?
-//                if (discover.net.gatewayIp.equals(host.ipAddress)) {
-//                    host.deviceType = HostBean.TYPE_GATEWAY;
-//                }
+                if (net.gatewayIp.equals(host.ipAddress)) {
+                    host.deviceType = HostBean.TYPE_GATEWAY;
+                }
 
                 // FQDN
                 // Static

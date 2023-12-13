@@ -2,8 +2,10 @@ package com.native_code.networkdiscovery.discoverymodule;
 
 import android.app.Activity;
 import android.content.Context;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Vibrator;
+import android.util.Log;
 
 import com.native_code.networkdiscovery.Network.HostBean;
 import com.native_code.networkdiscovery.Utils.Constant;
@@ -12,7 +14,7 @@ import java.lang.ref.WeakReference;
 
 public abstract class AbstractDiscovery2 extends AsyncTask<Void, HostBean, Void> {
 
-    //private final String TAG = "AbstractDiscovery";
+    private final String TAG = "AbstractDiscovery2";
 
     protected int hosts_done = 0;
 //    final protected WeakReference<ActivityDiscovery2> mDiscover;
@@ -50,6 +52,7 @@ public abstract class AbstractDiscovery2 extends AsyncTask<Void, HostBean, Void>
     protected void onProgressUpdate(HostBean... host) {
         if (!isCancelled()) {
             if (host[0] != null) {
+                Log.e(TAG, host[0].toString());
                 if (progress != null)
                     progress.onHostBeanUpdate(host[0]);
             }
