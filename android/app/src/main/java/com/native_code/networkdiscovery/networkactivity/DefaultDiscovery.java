@@ -3,7 +3,7 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package com.native_code.networkdiscovery;
+package com.native_code.networkdiscovery.networkactivity;
 
 import android.util.Log;
 

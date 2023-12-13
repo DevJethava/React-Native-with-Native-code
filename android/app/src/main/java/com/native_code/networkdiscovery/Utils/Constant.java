@@ -8,6 +8,8 @@ public class Constant {
     public final static String KEY_VIBRATE_FINISH = "vibrate_finish";
     public final static boolean DEFAULT_VIBRATE_FINISH = false;
 
+    public final static long VIBRATE = (long) 250;
+
 //    public final static String KEY_PORT_START = "port_start";
 //    public final static String DEFAULT_PORT_START = "1";
 //

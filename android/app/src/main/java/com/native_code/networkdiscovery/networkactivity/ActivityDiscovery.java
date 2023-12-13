@@ -3,7 +3,7 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package com.native_code.networkdiscovery;
+package com.native_code.networkdiscovery.networkactivity;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -33,7 +32,6 @@ import java.util.List;
 final public class ActivityDiscovery extends ActivityNet implements OnItemClickListener {
 
     private final String TAG = "ActivityDiscovery";
-    public final static long VIBRATE = (long) 250;
     public final static int SCAN_PORT_RESULT = 1;
     public static final int MENU_SCAN_SINGLE = 0;
     public static final int MENU_OPTIONS = 1;

@@ -1,4 +1,4 @@
-package com.native_code.networkdiscovery;
+package com.native_code.networkdiscovery.networkactivity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -25,6 +25,9 @@ import com.native_code.R;
 import com.native_code.networkdiscovery.Network.HostBean;
 import com.native_code.networkdiscovery.Network.NetInfo;
 import com.native_code.networkdiscovery.Utils.Constant;
+import com.native_code.networkdiscovery.discoverymodule.AbstractDiscovery2;
+import com.native_code.networkdiscovery.discoverymodule.DefaultDiscovery2;
+import com.native_code.networkdiscovery.networkactivity.ActivityNet;
 
 import java.util.ArrayList;
 import java.util.List;

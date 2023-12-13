@@ -1,4 +1,4 @@
-package com.native_code.networkdiscovery;
+package com.native_code.networkdiscovery.networkactivity;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -94,7 +94,7 @@ public abstract class AbstractDiscovery extends AsyncTask<Void, HostBean, Void> 
                 if (discover.prefs.getBoolean(Constant.KEY_VIBRATE_FINISH,
                         Constant.DEFAULT_VIBRATE_FINISH) == true) {
                     Vibrator v = (Vibrator) discover.getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(ActivityDiscovery.VIBRATE);
+                    v.vibrate(Constant.VIBRATE);
                 }
                 discover.makeToast(R.string.discover_finished);
                 discover.stopDiscovering();

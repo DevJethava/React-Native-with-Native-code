@@ -34,7 +34,7 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".networkdiscovery.ActivityDiscovery"
+            android:name=".networkdiscovery.networkactivity.ActivityDiscovery"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" />
 

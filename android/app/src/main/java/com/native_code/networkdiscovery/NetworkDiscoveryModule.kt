@@ -9,13 +9,18 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.google.gson.Gson
 import com.native_code.networkdiscovery.Network.HostBean
 import com.native_code.networkdiscovery.Network.NetInfo
 import com.native_code.networkdiscovery.Utils.Constant
+import com.native_code.networkdiscovery.discoverymodule.AbstractDiscovery2
+import com.native_code.networkdiscovery.discoverymodule.DefaultDiscovery2
+import com.native_code.networkdiscovery.networkactivity.ActivityDiscovery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 
 class NetworkDiscoveryModule(private val reactContext: ReactApplicationContext) :
@@ -101,11 +106,20 @@ class NetworkDiscoveryModule(private val reactContext: ReactApplicationContext) 
                 }
 
 
-                mDiscoveryTask = DefaultDiscovery2(mActivity, object : DefaultDiscovery2.Progress {
-                    override fun onHostBeanUpdate(bean: HostBean?) {
-                        bean?.let {
-                            Log.e(TAG, it.toString())
-                            hosts.add(it)
+                mDiscoveryTask =
+                    DefaultDiscovery2(
+                        mActivity,
+                        object :
+                            DefaultDiscovery2.Progress {
+                            override fun onHostBeanUpdate(bean: HostBean?) {
+                                bean?.let {
+                                    Log.e(TAG, it.toString())
+                                    hosts.add(it)
+                                    reactContext
+                                        .getJSModule(
+                                            DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+                                        )
+                                        .emit("onHostBeanUpdate", Gson().toJson(it))
 //                            val networkDiscoveryData =
 //                                NetworkDiscoveryData(hosts, progressInt, false)
 //                            try {
@@ -113,52 +127,71 @@ class NetworkDiscoveryModule(private val reactContext: ReactApplicationContext) 
 //                            } catch (e: Throwable) {
 //                                promise.reject("Error: onHostBeanUpdate", e)
 //                            }
-                        }
-                    }
+                                }
+                            }
 
-                    @SuppressLint("LongLogTag")
-                    override fun onProgressUpdate(progress: Int?) {
-                        progress?.let {
+                            @SuppressLint("LongLogTag")
+                            override fun onProgressUpdate(progress: Int?) {
+                                progress?.let {
 //                            Log.e("$TAG Pro", it.toString())
-                            progressInt = it
-                            val networkDiscoveryData = NetworkDiscoveryData(
-                                hosts = hosts,
-                                progressInt = progressInt,
-                                isCompleted = false
-                            )
+                                    progressInt = it
+                                    val jsonObject = JSONObject()
+                                    jsonObject.put("progress", (it / 100).toInt())
+                                    reactContext
+                                        .getJSModule(
+                                            DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+                                        )
+                                        .emit("onProgressUpdate", jsonObject.toString())
+                                    val networkDiscoveryData = NetworkDiscoveryData(
+                                        hosts = hosts,
+                                        progressInt = progressInt,
+                                        isCompleted = false
+                                    )
 //                            try {
 //                                promise.resolve(Gson().toJson(networkDiscoveryData))
 //                            } catch (e: Throwable) {
 //                                promise.reject("Error: onProgressUpdate", e)
 //                            }
-                        }
-                    }
+                                }
+                            }
 
-                    override fun onCancel() {
-                        Log.e(TAG, "onCancel")
+                            override fun onCancel() {
+                                Log.e(TAG, "onCancel")
+                                val jsonObject = JSONObject()
+                                jsonObject.put("isCancel", true)
+                                reactContext
+                                    .getJSModule(
+                                        DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+                                    )
+                                    .emit("onCancel", jsonObject.toString())
 //                        try {
 //                            promise.resolve("On Cancel Success !")
 //                        } catch (e: Throwable) {
 //                            promise.reject("Error: onProgressUpdate", e)
 //                        }
-                    }
+                            }
 
-                    @SuppressLint("StaticFieldLeak")
-                    override fun onPostExecute() {
-                        Log.e(TAG, "onPostExecute")
-                        val networkDiscoveryData = NetworkDiscoveryData(
-                            hosts = hosts,
-                            progressInt = progressInt,
-                            isCompleted = true
-                        )
-                        try {
-                            promise.resolve(Gson().toJson(networkDiscoveryData))
-                        } catch (e: Throwable) {
-                            promise.reject("Error: onPostExecute", e)
-                        }
-                    }
+                            @SuppressLint("StaticFieldLeak")
+                            override fun onPostExecute() {
+                                Log.e(TAG, "onPostExecute")
+                                val networkDiscoveryData = NetworkDiscoveryData(
+                                    hosts = hosts,
+                                    progressInt = progressInt,
+                                    isCompleted = true
+                                )
+//                                try {
+//                                    promise.resolve(Gson().toJson(networkDiscoveryData))
+//                                } catch (e: Throwable) {
+//                                    promise.reject("Error: onPostExecute", e)
+//                                }
+                                reactContext
+                                    .getJSModule(
+                                        DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+                                    )
+                                    .emit("onExecuteComplete", Gson().toJson(networkDiscoveryData))
+                            }
 
-                })
+                        })
                 mDiscoveryTask?.setNetwork(network_ip, network_start, network_end)
 //                mDiscoveryTask?.progress =
                 mDiscoveryTask?.execute()

@@ -3,7 +3,7 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package com.native_code.networkdiscovery;
+package com.native_code.networkdiscovery.discoverymodule;
 
 import android.app.Activity;
 import android.util.Log;
@@ -281,7 +281,7 @@ public class DefaultDiscovery2 extends AbstractDiscovery2 {
         publishProgress(host);
     }
 
-    interface Progress {
+    public interface Progress {
         void onHostBeanUpdate(HostBean bean);
 
         void onPostExecute();
