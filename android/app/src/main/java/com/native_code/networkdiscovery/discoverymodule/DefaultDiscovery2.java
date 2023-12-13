@@ -12,6 +12,7 @@ import com.native_code.networkdiscovery.Network.HardwareAddress;
 import com.native_code.networkdiscovery.Network.HostBean;
 import com.native_code.networkdiscovery.Network.NetInfo;
 import com.native_code.networkdiscovery.Network.RateControl;
+import com.native_code.networkdiscovery.Utils.Constant;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -143,7 +144,7 @@ public class DefaultDiscovery2 extends AbstractDiscovery2 {
 //                        Constant.DEFAULT_TIMEOUT_DISCOVER));
 //            }
 //        }
-        return 1;
+        return Integer.parseInt(Constant.DEFAULT_TIMEOUT_DISCOVER);
     }
 
     private class CheckRunnable implements Runnable {

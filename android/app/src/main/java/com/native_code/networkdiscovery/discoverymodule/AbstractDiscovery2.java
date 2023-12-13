@@ -2,7 +2,6 @@ package com.native_code.networkdiscovery.discoverymodule;
 
 import android.app.Activity;
 import android.content.Context;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.util.Log;
