@@ -29,6 +29,7 @@ function App(): React.JSX.Element {
     const [isShowIndicator, setIsShowIndicator] = useState(false)
     const [hostList, setHostList] = useState([])
     const [progress, setProgress] = useState(-1)
+    const [buttonClick, setButtonClick] = useState(1)
 
     const onPress = async () => {
         try {
@@ -44,6 +45,7 @@ function App(): React.JSX.Element {
 
     const onNetworkDiscovery = async () => {
         try {
+            setButtonClick(1)
             setIsShowIndicator(true)
             setHostList([])
             await NetworkDiscoveryModule.getNetworkDiscovery().then((result) => {
@@ -73,19 +75,49 @@ function App(): React.JSX.Element {
         }
     };
 
+    const onNetworkDiscovery2 = async () => {
+        try {
+            setButtonClick(2)
+            setIsShowIndicator(true)
+            setHostList([])
+            await NetworkDiscoveryModule.getNetworkDiscovery2()
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const onNetworkProgressCall = async (event) => {
+        try {
+            let res = JSON.parse(event)
+            if (res.isFinished) {
+                setIsShowIndicator(false)
+            }
+            // if (res.progressCount < res.progressTill) {
+            //     setIsShowIndicator(true)
+            // } else {
+            //     setIsShowIndicator(false)
+            // }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         // const eventEmitter = new DeviceEventEmitter();
-
         const onHostBeanUpdate = DeviceEventEmitter.addListener('onHostBeanUpdate', onHostBeanUpdateCall);
         const onProgressUpdate = DeviceEventEmitter.addListener('onProgressUpdate', onProgressUpdateCall);
         const onCancel = DeviceEventEmitter.addListener('onCancel', onCancelCall);
         const onExecuteComplete = DeviceEventEmitter.addListener('onExecuteComplete', onExecuteCompleteCall);
+        const onNetworkHostUpdate = DeviceEventEmitter.addListener('onNetworkHostUpdate', onNetworkHostUpdateCall);
+        const onNetworkProgress = DeviceEventEmitter.addListener('onNetworkProgress', onNetworkProgressCall);
 
         return () => {
             onHostBeanUpdate.remove()
             onProgressUpdate.remove()
             onCancel.remove()
             onExecuteComplete.remove()
+            onNetworkHostUpdate.remove()
+            onNetworkProgress.remove()
         }
 
     }, [])
@@ -114,13 +146,37 @@ function App(): React.JSX.Element {
         console.log(hostList)
     };
 
+    const onNetworkHostUpdateCall = (event) => {
+        console.log("onNetworkHostUpdateCall => ", event);
+        let res = JSON.parse(event)
+        if (!hostList.includes(event)) {
+            console.log("added")
+            setHostList(preList => [...preList, res])
+        }
+    };
+
     const Item = ({ item, pos }) => (
         <TouchableOpacity activeOpacity={0.5} onPress={() => console.log(pos, item)}>
             <View style={{ flexDirection: 'column', padding: 8, borderColor: "#000000", borderWidth: 1, margin: 8 }}>
-                <Text>IP Address: {item.ipAddress}</Text>
-                <Text>MAC Address: {item.hardwareAddress}</Text>
-                <Text>Vendor: {item.nicVendor}</Text>
-                <Text>os: {item.os}</Text>
+                {
+                    buttonClick === 1 && (
+                        <>
+                            <Text>IP Address: {item.ipAddress}</Text>
+                            <Text>MAC Address: {item.hardwareAddress}</Text>
+                            <Text>Vendor: {item.nicVendor}</Text>
+                            <Text>os: {item.os}</Text>
+                        </>
+                    )
+                }
+                {
+                    buttonClick === 2 && (
+                        <>
+                            <Text>Host Name: {item.hostname}</Text>
+                            <Text>IP Address: {item.ip}</Text>
+                            <Text>MAC Address: {item.mac}</Text>
+                        </>
+                    )
+                }
             </View>
         </TouchableOpacity>
     );
@@ -137,6 +193,12 @@ function App(): React.JSX.Element {
                 title="Network Discovery Activity"
                 color="#001500"
                 onPress={onNetworkDiscoveryActivity}
+            />
+
+            <Button
+                title="Network Discovery 2"
+                color="#00F100"
+                onPress={onNetworkDiscovery2}
             />
 
             <View style={{ marginTop: 32, margin: 16, justifyContent: 'space-evenly', flexDirection: 'row' }}>

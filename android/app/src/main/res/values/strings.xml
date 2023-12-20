@@ -151,4 +151,19 @@
         <item>Ping/connect (default)</item>
         <item>DNS requests</item>
     </string-array>
+
+    <!-- For Port Authority-->
+    <string name="errAccessArp">Unable to access ARP entries</string>
+    <string name="nonPrivilegedMacAccess">Unavailable for non-privileged apps starting with Android 11</string>
+    <string name="noWifiConnection">No WiFi connection</string>
+    <string name="noWifiInterface">No WiFi interface found</string>
+    <string name="wifiDisabled">WiFi not enabled</string>
+    <string name="failedWifiManager">Failed to get WifiManager for this device</string>
+    <string name="failedSsid">Failed to get SSID</string>
+    <string name="failedBssid">Failed to get BSSID</string>
+    <string name="signalLink">%1$ddBm/%2$dMbps</string>
+    <string name="failedSignal">Failed to get signal strength</string>
+    <string name="failedLinkSpeed">Failed to get link speed</string>
+    <string name="notConnectedWifi">You\'re not connected to a WiFi network!</string>
+    <string name="failedSubnetHosts">Failed to get the number of hosts in subnet</string>
 </resources>

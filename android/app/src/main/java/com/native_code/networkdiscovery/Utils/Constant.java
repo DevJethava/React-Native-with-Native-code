@@ -80,4 +80,11 @@ public class Constant {
 //    private static final String URL_DONATE = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MDSDWG83PJSNG&lc=CH&item_name=Network%20Discovery%20for%20Android&currency_code=CHF&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
 //    private static final String URL_WEB = "http://rorist.github.com/android-network-discovery/";
 //    private static final String URL_EMAIL = "aubort.jeanbaptiste@gmail.com";
+
+
+    /**
+     * For Port Authority
+     */
+    public static final String DEFAULT_LAN_SOCKET_TIMEOUT = "500";
+    public static final String DEFAULT_HOST_SOCKET_TIMEOUT = "500";
 }
