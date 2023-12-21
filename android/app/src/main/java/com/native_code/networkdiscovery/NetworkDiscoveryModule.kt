@@ -341,20 +341,6 @@ class NetworkDiscoveryModule(private val reactContext: ReactApplicationContext) 
                             DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
                         )
                         .emit("onNetworkProgress", jsonObject.toString())
-                    if (numSubnetHosts == progressInt) {
-                        val vibrator =
-                            currentActivity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            vibrator.vibrate(
-                                VibrationEffect.createOneShot(
-                                    Constant.VIBRATE,
-                                    VibrationEffect.DEFAULT_AMPLITUDE
-                                )
-                            )
-                        } else {
-                            vibrator.vibrate(200)
-                        }
-                    }
                 }
 
                 /**
@@ -383,6 +369,19 @@ class NetworkDiscoveryModule(private val reactContext: ReactApplicationContext) 
                                 DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
                             )
                             .emit("onNetworkProgress", jsonObject.toString())
+
+                        val vibrator =
+                            currentActivity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            vibrator.vibrate(
+                                VibrationEffect.createOneShot(
+                                    Constant.VIBRATE,
+                                    VibrationEffect.DEFAULT_AMPLITUDE
+                                )
+                            )
+                        } else {
+                            vibrator.vibrate(200)
+                        }
                     }
                 }
 
