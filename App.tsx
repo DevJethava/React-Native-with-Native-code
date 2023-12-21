@@ -183,8 +183,7 @@ function App(): React.JSX.Element {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Text>Hello</Text>
-            <Button
+            {/* <Button
                 title="Click to invoke your native module!"
                 color="#841584"
                 onPress={onPress}
@@ -193,7 +192,7 @@ function App(): React.JSX.Element {
                 title="Network Discovery Activity"
                 color="#001500"
                 onPress={onNetworkDiscoveryActivity}
-            />
+            /> */}
 
             <Button
                 title="Network Discovery 2"
@@ -201,7 +200,7 @@ function App(): React.JSX.Element {
                 onPress={onNetworkDiscovery2}
             />
 
-            <View style={{ marginTop: 32, margin: 16, justifyContent: 'space-evenly', flexDirection: 'row' }}>
+            {/* <View style={{ marginTop: 32, margin: 16, justifyContent: 'space-evenly', flexDirection: 'row' }}>
                 <Button
                     title="Network Discovery"
                     color="#001584"
@@ -213,7 +212,7 @@ function App(): React.JSX.Element {
                     color="#FF1712"
                     onPress={onNetworkDiscoveryCancel}
                 />
-            </View>
+            </View> */}
             {
                 isShowIndicator && (
                     <ActivityIndicator size="large" />
